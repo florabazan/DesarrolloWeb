@@ -1,12 +1,14 @@
 import React, { useState } from "react";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import Step1Paciente from "./components/Step1Paciente";
 import Step2Tutor from "./components/Step2Tutor";
 import Step3Medica from "./components/Step3Medica";
 import Step4Clinica from "./components/Step4Clinica";
 import Step5Confirmacion from "./components/Step5Confirmacion";
+import ComprobantesPage from "./pages/ComprobantesPage";
 import "./App.css";
 
-function App() {
+function EntrevistaForm() {
   const [step, setStep] = useState(1);
 
   const nextStep = () => {
@@ -18,21 +20,25 @@ function App() {
   };
 
   return (
-    <div className="form-container" style={{
-      backgroundColor: "#fdf6fb",
-      padding: "30px",
-      borderRadius: "15px",
-      width: "450px",
-      margin: "30px auto",
-      boxShadow: "0 3px 12px rgba(0, 0, 0, 0.15)",
-      fontFamily: "Arial, sans-serif",
-      color: "#000"
-    }}>
+    <div
+      className="form-container"
+      style={{
+        backgroundColor: "#fdf6fb",
+        padding: "40px 30px",
+        borderRadius: "25px",
+        border: "3px solid #e5cff7",
+        width: "480px",
+        margin: "50px auto",
+        boxShadow: "0 4px 12px rgba(0, 0, 0, 0.15)",
+        fontFamily: "Arial, sans-serif",
+        color: "#000",
+        boxSizing: "border-box,"
+      }}
+    >
       <h2 style={{ textAlign: "center", color: "#4b2e83", marginBottom: "25px" }}>
         Entrevista Tika
       </h2>
 
-      {/* Barra de progreso global */}
       <div
         style={{
           display: "flex",
@@ -74,7 +80,6 @@ function App() {
         ))}
       </div>
 
-      {/* Render de paso actual */}
       {step === 1 && <Step1Paciente nextStep={nextStep} />}
       {step === 2 && <Step2Tutor nextStep={nextStep} prevStep={prevStep} />}
       {step === 3 && <Step3Medica nextStep={nextStep} prevStep={prevStep} />}
@@ -84,4 +89,17 @@ function App() {
   );
 }
 
-export default App;
+export default function App() {
+  return (
+    <Router>
+      <div style={{ textAlign: "center", marginTop: "20px" }}>
+        <Link to="/" style={{ margin: "10px" }}>🏠 Entrevista</Link>
+        <Link to="/comprobantes" style={{ margin: "10px" }}>🧾 Comprobantes</Link>
+      </div>
+      <Routes>
+        <Route path="/" element={<EntrevistaForm />} />
+        <Route path="/comprobantes" element={<ComprobantesPage />} />
+      </Routes>
+    </Router>
+  );
+}

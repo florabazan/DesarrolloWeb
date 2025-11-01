@@ -36,7 +36,7 @@ function Step5Confirmacion({ prevStep }) {
         button.prev { background-color: #f0d5f7; color: #4b2e83; }
       `}</style>
 
-      <div className="form-container">
+      <div className="step-box">
         <h3>Revisión Final</h3>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="confirmation-box">

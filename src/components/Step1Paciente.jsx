@@ -10,52 +10,36 @@ function Step1Paciente({ nextStep }) {
   };
 
   return (
-    <>
-      <style>{`
-        .form-container {
-          background-color: #fdf6fb;
-          padding: 30px;
-          border-radius: 15px;
-          width: 450px;
-          margin: 0 auto;
-          font-family: Arial, sans-serif;
-          color: #000;
-        }
-        h3 { text-align: center; color: #4b2e83; margin-bottom: 25px; }
-        label { display: block; margin-bottom: 5px; font-weight: bold; }
-        input {
-          width: 100%; padding: 8px; margin-bottom: 15px;
-          border-radius: 8px; border: 1px solid #ccc; outline: none;
-        }
-        input:focus { border-color: #d79ce7; box-shadow: 0 0 4px rgba(215,156,231,0.5); }
-        button {
-          width: 100%; padding: 10px; border-radius: 8px;
-          background-color: #d79ce7; color: white; border: none;
-          font-weight: bold; cursor: pointer; transition: 0.3s;
-        }
-        button:hover { background-color: #b966d1; }
-        p.error { color: red; font-size: 0.9em; margin-top: -10px; }
-      `}</style>
+    <div className="step-box">
+      <h3 style={{ textAlign: "center", color: "#4b2e83", marginBottom: "25px" }}>
+        Datos del Paciente
+      </h3>
 
-      <div className="form-container">
-        <h3>Datos del Paciente</h3>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <label>Nombre:</label>
-          <input {...register("nombre", { required: "Campo obligatorio" })} />
-          {errors.nombre && <p className="error">{errors.nombre.message}</p>}
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <label>Nombre completo del niño:</label>
+        <input {...register("nombre_nino", { required: "Campo obligatorio" })} />
+        {errors.nombre_nino && <p className="error">{errors.nombre_nino.message}</p>}
 
-          <label>Apellido:</label>
-          <input {...register("apellido", { required: "Campo obligatorio" })} />
-          {errors.apellido && <p className="error">{errors.apellido.message}</p>}
+        <label>Fecha de nacimiento:</label>
+        <input type="date" {...register("fecha_nacimiento", { required: "Campo obligatorio" })} />
+        {errors.fecha_nacimiento && <p className="error">{errors.fecha_nacimiento.message}</p>}
 
-          <label>DNI:</label>
-          <input type="number" {...register("dni", { required: "Campo obligatorio" })} />
-          {errors.dni && <p className="error">{errors.dni.message}</p>}
+        <label>DNI:</label>
+        <input type="number" {...register("dni", { required: "Campo obligatorio" })} />
+        {errors.dni && <p className="error">{errors.dni.message}</p>}
 
-          <button type="submit">Siguiente</button>
-        </form>
-      </div>
-    </>
+        <label>Institución educativa actual (si asiste):</label>
+        <input type="text" {...register("institucion", { required: false })} />
+
+        <label>Grado / Nivel (si asiste):</label>
+        <input type="text" {...register("grado", { required: false })} />
+
+        <label>Actividades o juegos que disfruta:</label>
+        <input type="text" {...register("actividades", { required: false })} />
+
+        <button type="submit">Siguiente</button>
+      </form>
+    </div>
   );
 }
 

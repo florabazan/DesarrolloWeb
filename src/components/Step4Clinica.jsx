@@ -2,7 +2,7 @@ import React from "react";
 import { useForm } from "react-hook-form";
 
 function Step4Clinica({ nextStep, prevStep }) {
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, formState: { errors } } = useForm();
 
   const onSubmit = (data) => {
     console.log("Información clínica:", data);
@@ -10,50 +10,52 @@ function Step4Clinica({ nextStep, prevStep }) {
   };
 
   return (
-    <>
-      <style>{`
-        .form-container {
-          background-color: #fdf6fb;
-          padding: 30px;
-          border-radius: 15px;
-          width: 450px;
-          margin: 0 auto;
-          font-family: Arial, sans-serif;
-          color: #000;
-        }
-        h3 { text-align: center; color: #4b2e83; margin-bottom: 25px; }
-        label { display: block; margin-bottom: 5px; font-weight: bold; }
-        textarea {
-          width: 100%; padding: 8px; margin-bottom: 15px;
-          border-radius: 8px; border: 1px solid #ccc; outline: none;
-        }
-        textarea:focus { border-color: #d79ce7; box-shadow: 0 0 4px rgba(215,156,231,0.5); }
-        .buttons { display: flex; justify-content: space-between; margin-top: 10px; }
-        button {
-          width: 48%; padding: 10px; border-radius: 8px;
-          background-color: #d79ce7; color: white; border: none;
-          font-weight: bold; cursor: pointer; transition: 0.3s;
-        }
-        button:hover { background-color: #b966d1; }
-        button.prev { background-color: #f0d5f7; color: #4b2e83; }
-      `}</style>
+    <div className="step-box">
+      <h3>Información Clínica</h3>
 
-      <div className="form-container">
-        <h3>Información Clínica</h3>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <label>Motivo de la consulta:</label>
-          <textarea {...register("motivo")} placeholder="Explique el motivo de la consulta" />
+      <form onSubmit={handleSubmit(onSubmit)} className="form-step">
+        <label>¿Cuál es el motivo principal de la consulta?</label>
+        <textarea
+          {...register("motivo_consulta", { required: "Campo obligatorio" })}
+          rows="2"
+        ></textarea>
+        {errors.motivo_consulta && <p className="error">{errors.motivo_consulta.message}</p>}
 
-          <label>Observaciones:</label>
-          <textarea {...register("observaciones")} placeholder="Observaciones clínicas relevantes" />
+        <label>¿Desde cuándo observan esta dificultad o cambio?</label>
+        <input type="text" {...register("tiempo_dificultad")} />
 
-          <div className="buttons">
-            <button type="button" className="prev" onClick={prevStep}>Anterior</button>
-            <button type="submit">Siguiente</button>
-          </div>
-        </form>
-      </div>
-    </>
+        <label>¿Qué esperan lograr con la intervención terapéutica?</label>
+        <textarea {...register("objetivos_terapia")} rows="2"></textarea>
+
+        <label>¿Recibe actualmente apoyo escolar o terapéutico?</label>
+        <select {...register("apoyo_actual")}>
+          <option value="">Seleccionar</option>
+          <option value="Si">Sí</option>
+          <option value="No">No</option>
+        </select>
+
+        <label>Si la respuesta es sí, ¿con qué profesionales?</label>
+        <textarea {...register("profesionales_apoyo")} rows="2"></textarea>
+
+        <label>¿Hay situaciones que generen frustración o ansiedad en el niño?</label>
+        <textarea {...register("frustracion")} rows="2"></textarea>
+
+        <label>¿Qué fortalezas o habilidades destacarían de él/ella?</label>
+        <textarea {...register("fortalezas")} rows="2"></textarea>
+
+        <label>Datos relevantes adicionales que considere importante mencionar:</label>
+        <textarea {...register("datos_adicionales")} rows="3"></textarea>
+
+        <div className="buttons">
+          <button type="button" className="prev" onClick={prevStep}>
+            Anterior
+          </button>
+          <button type="submit">
+            Siguiente
+          </button>
+        </div>
+      </form>
+    </div>
   );
 }
 
